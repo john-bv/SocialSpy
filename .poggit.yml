@@ -1,5 +1,8 @@
 --- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/Olybear9/SocialSpy
 branches:
 - master
-projects: ['SocialSpy']
+projects:
+  SocialSpy:
+    path: ""
+    model: default
 ...
