@@ -1,6 +1,6 @@
 <?php
 declare(strict_types=1);
-namespace bav\socialspy;
+namespace Bavfalcon9\SocialSpy;
 
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
@@ -18,7 +18,6 @@ class Main extends PluginBase implements Listener {
 
     public function onEnable() {
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
-        $this->getLogger()->info("Enabled SocialSpy by Bavfalcon9");
     }
 
     public function onCommand(CommandSender $sender, Command $cmd, string $label, array $args) : bool{
@@ -72,15 +71,16 @@ class Main extends PluginBase implements Listener {
             if(strlen($plyerFull) === 0) return true;
             foreach ($this->enabled as $seer) {
                 $socialspy = $this->getServer()->getPlayer($seer);
+                if($socialspy === NULL) continue;
                 if($sender->getName() === $seer) continue;
                 if($plyerFull === $seer) continue;
                 if($socialspy->hasPermission("socialspy.command") === false && $socialspy->isOp() === false) {
                     $socialspy->sendMessage("§cYou do not have permission to use social spy, deactivating.");
                     if(in_array($seer, $this->enabled)) array_splice($this->enabled, array_search($socialspy->getName(), $this->enabled), 1);
-                    $socialspy->sendMessage("§8§l(§9Social-Spy§8)§r You have §cdisabled§f social spy.");
+                    $socialspy->sendMessage("§l§9Social-Spy§r You have §cdisabled§f social spy.");
                     continue;
                 }
-                $socialspy->sendMessage("§8§l(§9Social-Spy§8)§r §8[§7".$sender->getName()."§c ->§r §f".$plyerFull."§8]§7 " . $msg);
+                $socialspy->sendMessage("§l§9Social-Spy§r §8[§e".$sender->getName()."§c ->§r §f".$plyerFull."§8]§7 " . $msg);
                 //Code to view messages
             }
             return true;
